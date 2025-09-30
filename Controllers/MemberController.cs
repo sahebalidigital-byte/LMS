@@ -35,8 +35,9 @@ namespace LMS.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Member>> Create([FromBody] Member member)
+        public async Task<ActionResult<Member>> Create([FromBody] CreateMemberDto createMemberDto)
         {
+            var member = _mapper.Map<Member>(createMemberDto);
             var id = await _memberRepository.AddMemberAsync(member);
             return CreatedAtAction(nameof(GetById), new { id, controller = "member" }, _mapper.Map<MemberDto>(member));
         }
